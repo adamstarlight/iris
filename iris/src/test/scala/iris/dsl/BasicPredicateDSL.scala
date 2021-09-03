@@ -2,7 +2,7 @@ package iris.dsl
 
 import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
-import matchers.should.Matchers._
+import matchers.must.Matchers._
 
 import iris._
 
@@ -34,14 +34,24 @@ class BasicPredicateDSL extends AnyFlatSpec {
         stringVal: String
     )
 
-    ValueTypes.boolVal mustBe a[RecordField[Boolean]]
-    ValueTypes.byteVal mustBe a[RecordField[Byte]]
-    ValueTypes.shortVal mustBe a[RecordField[Short]]
-    ValueTypes.intVal mustBe a[RecordField[Int]]
-    ValueTypes.longVal mustBe a[RecordField[Long]]
-    ValueTypes.floatVal mustBe a[RecordField[Float]]
-    ValueTypes.doubleVal mustBe a[RecordField[Double]]
-    ValueTypes.charVal mustBe a[RecordField[Char]]
-    ValueTypes.stringVal mustBe a[RecordField[String]]
+    ValueTypes.boolVal mustBe a[RecordField[_]]
+    ValueTypes.byteVal mustBe a[RecordField[_]]
+    ValueTypes.shortVal mustBe a[RecordField[_]]
+    ValueTypes.intVal mustBe a[RecordField[_]]
+    ValueTypes.longVal mustBe a[RecordField[_]]
+    ValueTypes.floatVal mustBe a[RecordField[_]]
+    ValueTypes.doubleVal mustBe a[RecordField[_]]
+    ValueTypes.charVal mustBe a[RecordField[_]]
+    ValueTypes.stringVal mustBe a[RecordField[_]]
+  }
+
+  it should "preserve original companion object content" in {
+    @Record case class User(username: String, age: Int)
+
+    object User {
+      val companionField = "exists"
+    }
+
+    assert(User.companionField == "exists")
   }
 }
