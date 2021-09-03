@@ -61,5 +61,5 @@ class BasicPredicateDSL extends AnyFlatSpec {
 
 object BasicPredicateDSL {
   def assertType[T](value: T, expected: Type)(implicit actual: TypeTag[T]) =
-    actual.tpe match { case t: TypeRef => assert(t === expected) }
+    assert(actual.tpe === expected)
 }
