@@ -1,5 +1,6 @@
 package iris.dsl
 
+import scala.reflect.runtime.universe._
 import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 import matchers.must.Matchers._
@@ -7,6 +8,8 @@ import matchers.must.Matchers._
 import iris._
 
 class BasicPredicateDSL extends AnyFlatSpec {
+  import BasicPredicateDSL._
+
   it should "compile" in {
     @Record case class ValueTypes(
         boolVal: Boolean,
@@ -34,15 +37,15 @@ class BasicPredicateDSL extends AnyFlatSpec {
         stringVal: String
     )
 
-    ValueTypes.boolVal mustBe a[RecordField[_]]
-    ValueTypes.byteVal mustBe a[RecordField[_]]
-    ValueTypes.shortVal mustBe a[RecordField[_]]
-    ValueTypes.intVal mustBe a[RecordField[_]]
-    ValueTypes.longVal mustBe a[RecordField[_]]
-    ValueTypes.floatVal mustBe a[RecordField[_]]
-    ValueTypes.doubleVal mustBe a[RecordField[_]]
-    ValueTypes.charVal mustBe a[RecordField[_]]
-    ValueTypes.stringVal mustBe a[RecordField[_]]
+    assertType(ValueTypes.boolVal, typeOf[RecordField[Boolean]])
+    assertType(ValueTypes.byteVal, typeOf[RecordField[Byte]])
+    assertType(ValueTypes.shortVal, typeOf[RecordField[Short]])
+    assertType(ValueTypes.intVal, typeOf[RecordField[Int]])
+    assertType(ValueTypes.longVal, typeOf[RecordField[Long]])
+    assertType(ValueTypes.floatVal, typeOf[RecordField[Float]])
+    assertType(ValueTypes.doubleVal, typeOf[RecordField[Double]])
+    assertType(ValueTypes.charVal, typeOf[RecordField[Char]])
+    assertType(ValueTypes.stringVal, typeOf[RecordField[String]])
   }
 
   it should "preserve original companion object content" in {
@@ -54,4 +57,9 @@ class BasicPredicateDSL extends AnyFlatSpec {
 
     assert(User.companionField == "exists")
   }
+}
+
+object BasicPredicateDSL {
+  def assertType[T](value: T, expected: Type)(implicit actual: TypeTag[T]) =
+    actual.tpe match { case t: TypeRef => assert(t === expected) }
 }
