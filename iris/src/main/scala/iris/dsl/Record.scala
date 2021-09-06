@@ -15,7 +15,11 @@ private class RecordImpl(val c: whitebox.Context) {
   import c.universe._
 
   def fieldAccessor(name: TermName, tpt: Tree): Tree =
-    q"val $name: RecordField[$tpt] = new RecordField[$tpt] {}"
+    q"""
+    val $name: RecordField[$tpt] = new RecordField[$tpt] {
+      def fieldName = ${name.toString}
+    }
+    """
 
   def fieldsDefs(params: List[ValDef]): List[Tree] = {
     params.map(field =>

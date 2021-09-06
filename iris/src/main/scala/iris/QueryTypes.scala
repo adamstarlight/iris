@@ -1,7 +1,7 @@
 package iris
 
 trait FindQuery[F[_], T] extends QueryExecutor[F, T, T] {
-  def find(predicate: Predicate): FindQuery[F, T]
+  //def find(predicate: Predicate): FindQuery[F, T]
   def update(u: Update[T]): UpdateQuery[F, T]
   def delete(): DeleteQuery[F, T]
 }
