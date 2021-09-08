@@ -1,7 +1,8 @@
 val commonSettings = Seq(
   scalaVersion := "2.13.5",
   libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "3.2.9" % Test
+    "org.scalatest" %% "scalatest" % "3.2.9" % Test,
+    "org.scalacheck" %% "scalacheck" % "1.14.0" % Test,
   )
 )
 
