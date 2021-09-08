@@ -1,9 +1,13 @@
 # Specific IDE settings
-/.bloop
+/**/.bloop
 /.bsp
 /.metals
 /.idea
 /.vscode
+/.cache
+/.history
+/.lib
+/project/metals.sbt
 
 # Compiled classes and logs
 *.class
