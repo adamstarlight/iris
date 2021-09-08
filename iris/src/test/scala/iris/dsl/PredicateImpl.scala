@@ -30,3 +30,8 @@ object PredicateImpl extends PredicateDSL[String] {
   def in[T](fieldName: String, value: Seq[T]): String =
     s"$fieldName in [${value.mkString(", ")}]"
 }
+
+object PredicateHelpers {
+  def assertPredicate(p: Predicate[String], expected: String) =
+    assert(p(PredicateImpl) == expected)
+}

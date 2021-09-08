@@ -4,12 +4,10 @@ import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 
 import iris._
+import PredicateHelpers._
 
 class RelationalOperatorsDSL extends AnyFlatSpec {
   @Record case class User(username: String, age: Int)
-
-  def assertPredicate(p: Predicate[String], expected: String) =
-    assert(p(PredicateImpl) == expected)
 
   List[(String, Predicate[String], String)](
     ("===", User.username === "Bob", "username eq Bob"),
