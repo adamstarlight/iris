@@ -10,8 +10,12 @@ val commonSettings = Seq(
 )
 
 val zioVersion = "1.0.11"
+val zioCatsVersion = "3.1.1.0"
+val doobieVersion = "1.0.0-RC1"
+
 val zioDependencies = Seq(
   "dev.zio" %% "zio" % zioVersion,
+  "dev.zio" %% "zio-interop-cats" % zioCatsVersion,
 )
 
 lazy val root = (project in file("."))
@@ -41,7 +45,12 @@ lazy val doobieZio = (project in file("iris-doobie-zio"))
     name := "iris-doobie-zio",
     libraryDependencies ++= zioDependencies,
     libraryDependencies ++= Seq(
-      "io.zonky.test.postgres" % "embedded-postgres-binaries-bom" % "13.4.0" pomOnly()
+      "org.tpolecat" %% "doobie-core"     % doobieVersion,
+      "org.tpolecat" %% "doobie-postgres" % doobieVersion,
+      "io.zonky.test.postgres" % "embedded-postgres-binaries-bom" % "13.4.0" % Test pomOnly(),
+      "io.zonky.test" % "embedded-postgres" % "1.3.1" % Test,
+      "org.slf4j" % "slf4j-api" % "1.7.32" % Test,
+      "org.slf4j" % "slf4j-simple" % "1.7.32" % Test,
     )
   )
   .aggregate(core)
